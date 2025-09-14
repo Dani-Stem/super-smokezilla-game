@@ -34,18 +34,30 @@ class Game:
 		if not hasattr(self, "start_channel"):
 			self.start_channel = pygame.mixer.Channel(0)
 
-	def smokezilla_avi(self):
-		img_smokezilla_avi = pygame.image.load("images/idle/0.png").convert_alpha()
-		self.screen.blit(
-			img_smokezilla_avi,
-			pygame.Rect(190, 225, 20, 20),
-		)
+		self.load_animation()
+
+	def load_animation(self):
+		num_frames = 1
+		self.idle_anim = {}
+		self.idle_anim['frame_index'] = 0
+		self.idle_anim['frames'] = []
+		self.idle_anim['num_frames'] = num_frames
+		for i in range(num_frames):
+			self.idle_anim['frames'].append(pygame.image.load("images/idle/" + str(i) + ".png").convert_alpha())
+
+	def smokezilla_avi(self, dt):
+		index = self.idle_anim['frame_index']
+		img = self.idle_anim['frames'][int(index)]
+		self.screen.blit(img, pygame.Rect(190, 225, 20, 20))
+
+		self.idle_anim['frame_index'] += 8 * dt
+		self.idle_anim['frame_index'] %= self.idle_anim['num_frames']
     
 	def start_menu(self):
 		start_menu(self)
 		
-	def render_start_menu(self):
-		render_start_menu(self)
+	def render_start_menu(self, dt):
+		render_start_menu(self, dt)
 		    
 	def run(self):
 		self.start_menu()

@@ -1,7 +1,7 @@
 import pygame, sys
 import time
 
-def render_start_menu(self):
+def render_start_menu(self, dt):
     self.screen.fill(self.WHITE)
     start_font = pygame.font.Font("font.ttf", 50)
     select_font = pygame.font.Font("font.ttf", 40)
@@ -37,7 +37,7 @@ def render_start_menu(self):
             )
         )
         self.screen.blit(menu_text, text_rect)
-        self.smokezilla_avi()
+        self.smokezilla_avi(dt)
 
 
 def start_menu(self):
@@ -78,5 +78,7 @@ def start_menu(self):
                     # self.playerselect_menu()
                     self.confirm_sound.play()
 
-        self.render_start_menu()
+        dt = self.clock.tick(60) / 1000
+
+        self.render_start_menu(dt)
         pygame.display.flip()
