@@ -73,11 +73,11 @@ def start_menu(self):
                         self.menu_items
                     )
                 elif event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
-
-                    self.confirm_sound.play()
-                    # self.playerselect_menu()
-                    self.confirm_sound.play()
-
+        
+                    # self.confirm_sound.play()
+                    self.game_loop()
+                    # self.confirm_sound.play()            
+        
         dt = self.clock.tick(60) / 1000
 
         self.render_start_menu(dt)

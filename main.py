@@ -37,7 +37,7 @@ class Game:
 		self.load_animation()
 
 	def load_animation(self):
-		num_frames = 1
+		num_frames = 6
 		self.idle_anim = {}
 		self.idle_anim['frame_index'] = 0
 		self.idle_anim['frames'] = []
@@ -48,7 +48,7 @@ class Game:
 	def smokezilla_avi(self, dt):
 		index = self.idle_anim['frame_index']
 		img = self.idle_anim['frames'][int(index)]
-		self.screen.blit(img, pygame.Rect(190, 225, 20, 20))
+		self.screen.blit(img, pygame.Rect(160, 285, 20, 20))
 
 		self.idle_anim['frame_index'] += 8 * dt
 		self.idle_anim['frame_index'] %= self.idle_anim['num_frames']
