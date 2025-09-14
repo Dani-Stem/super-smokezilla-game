@@ -74,9 +74,7 @@ def start_menu(self):
                     )
                 elif event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
 
-                    self.confirm_sound.play()
-                    # self.playerselect_menu()
-                    self.confirm_sound.play()
+                    self.game_loop()
 
         self.render_start_menu()
         pygame.display.flip()

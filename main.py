@@ -38,7 +38,7 @@ class Game:
 		img_smokezilla_avi = pygame.image.load("images/idle/0.png").convert_alpha()
 		self.screen.blit(
 			img_smokezilla_avi,
-			pygame.Rect(190, 225, 20, 20),
+			pygame.Rect(150, 255, 20, 20),
 		)
     
 	def start_menu(self):
