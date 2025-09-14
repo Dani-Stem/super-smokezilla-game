@@ -12,7 +12,7 @@ class Player(pygame.sprite.Sprite):
 		self.direction = pygame.math.Vector2(1, 0)
 		self.position = pygame.math.Vector2(pos)
 		self.rect = None
-		self.selected_player = "brunson"
+		self.selected_player = "zilla"
 		self.dttimer = 0
 		self.import_assets()
 		self.animation = self.animations["idle"]
@@ -35,3 +35,69 @@ class Player(pygame.sprite.Sprite):
 
 		self.landing_sound = pygame.mixer.Sound("sounds/land.ogg")
 		self.landing_sound.set_volume(0.02)
+		
+
+	def load_animation(self, path, frame_count):
+		images = []
+
+		for i in range(frame_count):
+			image_path = f"{path}{i}.png"
+			image = pygame.image.load(image_path).convert_alpha()
+
+			images.append(image)
+
+		return images
+	
+	def import_assets(self):
+		# Define animation types and frame counts
+		animation_data = {
+			"walk": ("walk/", 8),
+			"jump": ("jump/", 9),
+			"idle": ("idle/", 10),
+		}
+		
+		base_path = f"images/"
+		
+		self.animations = {
+			key: self.load_animation(base_path + path, frames)
+			for key, (path, frames) in animation_data.items()
+		}
+		
+	def input(self, events, dt, screen):
+		for event in events:
+			keys = pygame.key.get_pressed()
+			if keys[pygame.K_RIGHT]:
+				self.is_idle = False
+				self.status = "right"
+				self.direction.x = 1
+				
+	def apply_scale(self):
+		width, height = self.image.get_size()
+		new_width = int(width * self.scale_factor)
+		new_height = int(height * self.scale_factor)
+		self.image = pygame.transform.scale(
+			self.animation[int(self.frame_index)], (new_width, new_height)
+		)
+		self.rect = self.image.get_rect(center=self.rect.center)
+		
+	def update_frame(self, dt):
+
+		if self.animation in [
+			self.animations["jump"]
+		]:
+
+			if self.frame_index > len(self.animation) - 2:
+				self.animation_done()
+			else:
+				self.speed = self.speed
+
+		if self.frame_index >= len(self.animation):
+			self.frame_index = 0
+		self.image = self.animation[int(self.frame_index)]
+		
+	def update(self, dt, events, screen, selected_player):
+		self.input(events, dt, screen)
+		self.move(dt, screen)
+		self.animate(dt)
+		return 
+					

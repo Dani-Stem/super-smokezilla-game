@@ -37,6 +37,7 @@ def render_start_menu(self):
             )
         )
         self.screen.blit(menu_text, text_rect)
+        self.smokezilla_avi()
 
 
 def start_menu(self):
@@ -71,20 +72,11 @@ def start_menu(self):
                     self.start_selected_index = (self.start_selected_index + 1) % len(
                         self.menu_items
                     )
-                # elif event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
+                elif event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
 
-                #     if self.menu_items[self.start_selected_index] == "KNICKS":
-                #         self.team = "knicks"
-                #         self.switch_team("knicks")
-                #     elif (
-                #         self.menu_items[self.start_selected_index] == "LAKERS"
-                #     ):
-                #         self.team = "lakers"
-                #         self.switch_team("lakers")
-
-                    # self.confirm_sound.play()
+                    self.confirm_sound.play()
                     # self.playerselect_menu()
-                    # self.confirm_sound.play()
+                    self.confirm_sound.play()
 
         self.render_start_menu()
         pygame.display.flip()
