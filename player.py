@@ -18,7 +18,6 @@ class Player(pygame.sprite.Sprite):
 		self.animation = self.animations["idle"]
 		self.image = self.animation[self.frame_index]
 		self.rect = self.image.get_rect(center=pos)
-		self.create_basketball = create_basketball
 
 		self.height = 0
 		self.velocity = 0
