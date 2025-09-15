@@ -14,7 +14,14 @@ def game_loop(self):
 				mouse = event.pos
 
 		dt = self.clock.tick(60) / 1000
-		
+
+
+		self.all_sprites_group.customize_draw(
+			self.player,
+			self.screen,
+			self.background   
+
+		)
 
 		pygame.display.update()
 

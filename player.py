@@ -51,9 +51,12 @@ class Player(pygame.sprite.Sprite):
 	def import_assets(self):
 		# Define animation types and frame counts
 		animation_data = {
-			"walk": ("walk/", 8),
-			"jump": ("jump/", 9),
-			"idle": ("idle/", 10),
+			"walk": ("walk/", 5),
+			"jump": ("jump/", 6),
+			"jump_shirt": ("jump_shirt/", 6),
+			"walk_shirt": ("walk_shirt/", 5),
+			"walk_clothed": ("walk_clothed/", 5),
+			"idle": ("idle/", 5),
 		}
 		
 		base_path = f"images/"

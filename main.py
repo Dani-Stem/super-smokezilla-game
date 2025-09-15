@@ -2,6 +2,7 @@ import pygame
 import time
 from menu import start_menu, render_start_menu
 from game_loop import game_loop
+from all_sprites import AllSprites
 
 class Game:
 	def __init__(self):
@@ -34,6 +35,10 @@ class Game:
         # channels
 		if not hasattr(self, "start_channel"):
 			self.start_channel = pygame.mixer.Channel(0)
+
+		# groups
+		self.all_sprites_group = AllSprites()
+
 
 		self.load_animation()
 
