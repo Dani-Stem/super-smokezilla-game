@@ -40,18 +40,7 @@ def game_loop(self):
 
 		self.player.draw(self.screen, dt)
 
-		# test platforms
-		plats = [
-			pygame.Rect(500,640,120,20),
-			pygame.Rect(600,620,80,20),
-			pygame.Rect(700,650,50,20),
-			pygame.Rect(800,630,100,20),
-			pygame.Rect(1000,620,300,20)
-		]
-		for plat in plats:
-			plat.x -= self.player.pos.x
-			plat.y -= self.player.pos.y
-			pygame.draw.rect(self.screen, "green", plat)
+		self.load_animation_shirt(self)
 
 		pygame.display.update()
 
