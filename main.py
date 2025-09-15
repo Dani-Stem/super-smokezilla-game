@@ -1,6 +1,7 @@
 import pygame
 import time
 from menu import start_menu, render_start_menu
+from game_loop import game_loop
 
 class Game:
 	def __init__(self):
@@ -43,7 +44,7 @@ class Game:
 		self.idle_anim['frames'] = []
 		self.idle_anim['num_frames'] = num_frames
 		for i in range(num_frames):
-			self.idle_anim['frames'].append(pygame.image.load("images/idle/" + str(i) + ".png").convert_alpha())
+			self.idle_anim['frames'].append(pygame.image.load("images/idle_clothed/" + str(i) + ".png").convert_alpha())
 
 	def smokezilla_avi(self, dt):
 		index = self.idle_anim['frame_index']
@@ -58,6 +59,9 @@ class Game:
 		
 	def render_start_menu(self, dt):
 		render_start_menu(self, dt)
+		
+	def game_loop(self):
+		game_loop(self)
 		    
 	def run(self):
 		self.start_menu()
