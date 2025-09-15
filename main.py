@@ -3,7 +3,7 @@ import time
 from menu import start_menu, render_start_menu
 from game_loop import game_loop
 from all_sprites import AllSprites
-from player import Player
+from player2 import Player2
 
 class Game:
 	def __init__(self):
@@ -13,7 +13,6 @@ class Game:
 		self.screen = pygame.display.set_mode((self.WINDOW_WIDTH, self.WINDOW_HEIGHT))
 		pygame.display.set_caption("SUPER SMOKEZILLA")
 		self.clock = pygame.time.Clock()
-		self.player = Player(self)
 		
 		# varaibles 
 		self.start_selected_index = 0
@@ -38,11 +37,10 @@ class Game:
 		if not hasattr(self, "start_channel"):
 			self.start_channel = pygame.mixer.Channel(0)
 
-		# groups
-		self.all_sprites_group = AllSprites()
-
+		self.player = Player2(pygame.math.Vector2(self.WINDOW_WIDTH/2, self.WINDOW_HEIGHT/2+200))
 
 		self.load_animation()
+		self.load_background()
 
 	def load_animation(self):
 		num_frames = 6
@@ -52,6 +50,14 @@ class Game:
 		self.idle_anim['num_frames'] = num_frames
 		for i in range(num_frames):
 			self.idle_anim['frames'].append(pygame.image.load("images/idle_clothed/" + str(i) + ".png").convert_alpha())
+
+	def load_background(self):
+		self.bg = {}
+		scale_factor = 1
+		img = pygame.image.load("images/bg.jpg").convert_alpha()
+		size = img.get_size()
+		scaled = pygame.transform.scale(img, (size[0]*scale_factor, size[1]*scale_factor))
+		self.bg['image'] = scaled
 
 	def smokezilla_avi(self, dt):
 		index = self.idle_anim['frame_index']
