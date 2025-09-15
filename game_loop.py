@@ -15,7 +15,6 @@ def game_loop(self):
 
 		dt = self.clock.tick(60) / 1000
 
-
 		self.all_sprites_group.customize_draw(
 			self.player,
 			self.screen,

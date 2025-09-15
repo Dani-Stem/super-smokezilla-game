@@ -3,6 +3,7 @@ import time
 from menu import start_menu, render_start_menu
 from game_loop import game_loop
 from all_sprites import AllSprites
+from player import Player
 
 class Game:
 	def __init__(self):
@@ -12,6 +13,7 @@ class Game:
 		self.screen = pygame.display.set_mode((self.WINDOW_WIDTH, self.WINDOW_HEIGHT))
 		pygame.display.set_caption("SUPER SMOKEZILLA")
 		self.clock = pygame.time.Clock()
+		self.player = Player(self)
 		
 		# varaibles 
 		self.start_selected_index = 0

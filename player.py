@@ -3,7 +3,7 @@ import time
 import random
 
 class Player(pygame.sprite.Sprite):
-	def __init__(self, pos, groups, create_basketball, ):
+	def __init__(self, pos, groups,):
 		super().__init__(groups)
 		self.group = groups
 		self.WINDOW_WIDTH, self.WINDOW_HEIGHT = 1215, 812
