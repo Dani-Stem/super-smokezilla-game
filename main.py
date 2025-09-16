@@ -17,6 +17,7 @@ class Game:
 		self.clock = pygame.time.Clock()
 		
 		# varaibles 
+		self.love = True
 		self.start_selected_index = 0
 		self.menu_items = ["START GAME", "HOW TO PLAY"]
 		
@@ -41,7 +42,7 @@ class Game:
 
 		self.player = Player(pygame.math.Vector2(self.WINDOW_WIDTH/2, self.WINDOW_HEIGHT/2+200))
 
-		self.shirt = Shirt(pygame.math.Vector2(self.WINDOW_WIDTH/2+500, self.WINDOW_HEIGHT/2))
+		self.shirt = Shirt(pygame.math.Vector2(self.WINDOW_WIDTH/2+350, self.WINDOW_HEIGHT/2))
 
 		self.hat = Hat(pygame.math.Vector2(self.WINDOW_WIDTH/2+900, self.WINDOW_HEIGHT/2))
 

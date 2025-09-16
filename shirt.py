@@ -6,6 +6,7 @@ class Shirt:
 		self.center = center
 		self.pos = vec(0,0)
 		self.dir = vec(0,0)
+		self.display = True
 		
 		self.load_animations_shirt()
 
