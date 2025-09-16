@@ -48,6 +48,8 @@ class Game:
 
 		self.hat = Hat(pygame.math.Vector2(self.WINDOW_WIDTH/2+900, self.WINDOW_HEIGHT/2+100))
 
+		self.parallax_on = True
+		self.show_clouds = True
 		self.load_animation()
 		self.load_background()
 		self.load_clouds()
@@ -71,7 +73,6 @@ class Game:
 		self.bg['x_pos'] = 0
 
 	def load_clouds(self):
-		self.show_clouds = True
 		self.clouds = []
 		imgs = []
 		imgs.append(pygame.image.load("images/cloud.png").convert_alpha())
