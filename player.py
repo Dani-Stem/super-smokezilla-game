@@ -1,105 +1,91 @@
 import pygame
-import time
-import random
+from pygame.math import Vector2 as vec
 
-class Player(pygame.sprite.Sprite):
-	def __init__(self, pos, groups,):
-		super().__init__(groups)
-		self.group = groups
-		self.WINDOW_WIDTH, self.WINDOW_HEIGHT = 1215, 812
-		self.status = "right"
-		self.frame_index = 0
-		self.direction = pygame.math.Vector2(1, 0)
-		self.position = pygame.math.Vector2(pos)
-		self.rect = None
-		self.selected_player = "zilla"
-		self.dttimer = 0
-		self.import_assets()
-		self.animation = self.animations["idle"]
-		self.image = self.animation[self.frame_index]
-		self.rect = self.image.get_rect(center=pos)
-
-		self.height = 0
-		self.velocity = 0
-		self.jump_speed = 400
-		self.jump_start = 1
-		self.gravity = -800
+class Player2:
+	def __init__(self, center):
+		self.center = center
+		self.pos = vec(0,0)
+		self.vel = vec(0,0)
+		self.dir = vec(0,0)
+		self.speed = 250
+		self.jump_vel = -320
+		self.gravity = 700
+		self.grounded = True
 		
-		self.love = True
-		self.is_idle = False
-		self.scale_factor = 1.0
+		self.load_animations()
 
-		self.jump_sound = pygame.mixer.Sound("sounds/jump.wav")
-		self.jump_sound.set_volume(0.05)
-
-		self.landing_sound = pygame.mixer.Sound("sounds/land.ogg")
-		self.landing_sound.set_volume(0.02)
-		
-
-	def load_animation(self, path, frame_count):
-		images = []
-
-		for i in range(frame_count):
-			image_path = f"{path}{i}.png"
-			image = pygame.image.load(image_path).convert_alpha()
-
-			images.append(image)
-
-		return images
-	
-	def import_assets(self):
-		# Define animation types and frame counts
-		animation_data = {
-			"walk": ("walk/", 5),
-			"jump": ("jump/", 6),
-			"jump_shirt": ("jump_shirt/", 6),
-			"walk_shirt": ("walk_shirt/", 5),
-			"walk_clothed": ("walk_clothed/", 5),
-			"idle": ("idle/", 5),
+	def load_animations(self):
+		self.anims = {}
+		self.cur_anim = 'idle'
+		self.flipped = False
+		animations = {'idle':6, 'idle_clothed':7, 'jump':7,
+			'walk':6, 'walk_clothed':6, 'walk_shirt':6
 		}
-		
-		base_path = f"images/"
-		
-		self.animations = {
-			key: self.load_animation(base_path + path, frames)
-			for key, (path, frames) in animation_data.items()
-		}
-		
-	def input(self, events, dt, screen):
-		for event in events:
-			keys = pygame.key.get_pressed()
-			if keys[pygame.K_RIGHT]:
-				self.is_idle = False
-				self.status = "right"
-				self.direction.x = 1
-				
-	def apply_scale(self):
-		width, height = self.image.get_size()
-		new_width = int(width * self.scale_factor)
-		new_height = int(height * self.scale_factor)
-		self.image = pygame.transform.scale(
-			self.animation[int(self.frame_index)], (new_width, new_height)
-		)
-		self.rect = self.image.get_rect(center=self.rect.center)
-		
-	def update_frame(self, dt):
+		for anim, num_frames in animations.items():
+			self.anims[anim] = {}
+			self.anims[anim]['frame_index'] = 0
+			self.anims[anim]['frames'] = []
+			self.anims[anim]['num_frames'] = num_frames
+			self.anims[anim]['frame_rate'] = 6
+			for i in range(num_frames):
+				self.anims[anim]['frames'].append(pygame.image.load(f"images/{anim}/{i}.png").convert_alpha())
 
-		if self.animation in [
-			self.animations["jump"]
-		]:
+	def update_anims(self, dt):
+		if self.dir.x < 0:
+			self.cur_anim = 'walk'
+			self.flipped = True
+		elif self.dir.x > 0:
+			self.cur_anim = 'walk'
+			self.flipped = False
 
-			if self.frame_index > len(self.animation) - 2:
-				self.animation_done()
-			else:
-				self.speed = self.speed
+		if self.dir.x == 0:
+			self.cur_anim = 'idle'
+			
+		anim = self.anims[self.cur_anim]
+		index = anim['frame_index']
 
-		if self.frame_index >= len(self.animation):
-			self.frame_index = 0
-		self.image = self.animation[int(self.frame_index)]
+		anim['frame_index'] += 8 * dt
+		anim['frame_index'] %= anim['num_frames']
 		
-	def update(self, dt, events, screen, selected_player):
-		self.input(events, dt, screen)
-		self.move(dt, screen)
-		self.animate(dt)
-		return 
-					
+		img = anim['frames'][int(index)]
+		if self.flipped:
+			flipped_img = pygame.transform.flip(img, True, False)
+			return flipped_img
+
+		return img
+
+	def jump(self):
+		if not self.grounded:
+			return
+
+		self.vel.y += self.jump_vel
+		self.grounded = False
+
+	def move_left(self):
+		self.dir.x = -1
+		
+	def move_right(self):
+		self.dir.x = 1
+
+	def draw(self, screen, dt):
+		img = self.update_anims(dt)
+		rect = img.get_rect()
+		rect.center = (self.center.x, self.center.y)
+		screen.blit(img, rect)
+
+	def collision(self):
+		# ground level
+		if self.pos.y > 0:
+			self.pos.y = 0
+			self.vel.y = 0
+			self.grounded = True
+
+	def update(self, dt):
+		self.pos += self.vel * dt
+		self.pos += self.dir * self.speed * dt
+		
+		# gravity
+		self.vel.y += self.gravity * dt
+
+		self.collision()
+

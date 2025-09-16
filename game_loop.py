@@ -40,8 +40,6 @@ def game_loop(self):
 
 		self.player.draw(self.screen, dt)
 
-		self.load_animation_shirt(self)
-
 		pygame.display.update()
 
 

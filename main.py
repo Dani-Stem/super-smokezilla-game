@@ -3,7 +3,7 @@ import time
 from menu import start_menu, render_start_menu
 from game_loop import game_loop
 from all_sprites import AllSprites
-from player2 import Player2
+from player import Player2
 
 class Game:
 	def __init__(self):
@@ -39,7 +39,6 @@ class Game:
 
 		self.player = Player2(pygame.math.Vector2(self.WINDOW_WIDTH/2, self.WINDOW_HEIGHT/2+200))
 
-		self.load_animation_shirt()
 		self.load_animation()
 		self.load_background()
 
@@ -52,15 +51,6 @@ class Game:
 		for i in range(num_frames):
 			self.idle_anim['frames'].append(pygame.image.load("images/idle_clothed/" + str(i) + ".png").convert_alpha())
 
-	def load_animation_shirt(self):
-		num_frames = 4
-		self.idle_anim = {}
-		self.idle_anim['frame_index'] = 0
-		self.idle_anim['frames'] = []
-		self.idle_anim['num_frames'] = num_frames
-		for i in range(num_frames):
-			self.idle_anim['frames'].append(pygame.image.load("images/shirt/" + str(i) + ".png").convert_alpha())
-
 	def load_background(self):
 		self.bg = {}
 		scale_factor = .5
@@ -70,14 +60,6 @@ class Game:
 		self.bg['image'] = scaled
 
 	def smokezilla_avi(self, dt):
-		index = self.idle_anim['frame_index']
-		img = self.idle_anim['frames'][int(index)]
-		self.screen.blit(img, pygame.Rect(160, 285, 20, 20))
-
-		self.idle_anim['frame_index'] += 8 * dt
-		self.idle_anim['frame_index'] %= self.idle_anim['num_frames']
-
-	def shirt_avi(self, dt):
 		index = self.idle_anim['frame_index']
 		img = self.idle_anim['frames'][int(index)]
 		self.screen.blit(img, pygame.Rect(160, 285, 20, 20))
