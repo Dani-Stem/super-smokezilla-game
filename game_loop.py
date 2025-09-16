@@ -17,6 +17,7 @@ def player_input(events, player):
 			if event.key == pygame.K_d:
 				player.dir *= 0
 
+
 def game_loop(self):
 	while True:
 		self.screen.fill(self.WHITE)
@@ -39,8 +40,8 @@ def game_loop(self):
 		)
 
 		self.player.draw(self.screen, dt)
-		
-		if (self.player.pos - self.shirt.center).magnitude() < 400:
+
+		if self.shirt.collides_with((self.player.pos + self.center)):
 			self.shirt.display = False
 
 		if self.shirt.display:

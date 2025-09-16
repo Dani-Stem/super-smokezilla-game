@@ -40,11 +40,12 @@ class Game:
 		if not hasattr(self, "start_channel"):
 			self.start_channel = pygame.mixer.Channel(0)
 
-		self.player = Player(pygame.math.Vector2(self.WINDOW_WIDTH/2, self.WINDOW_HEIGHT/2+200))
+		self.center = pygame.math.Vector2(self.WINDOW_WIDTH/2, self.WINDOW_HEIGHT/2+200)
+		self.player = Player(self.center)
 
-		self.shirt = Shirt(pygame.math.Vector2(self.WINDOW_WIDTH/2+350, self.WINDOW_HEIGHT/2))
+		self.shirt = Shirt(pygame.math.Vector2(self.WINDOW_WIDTH/2+350, self.WINDOW_HEIGHT/2+100))
 
-		self.hat = Hat(pygame.math.Vector2(self.WINDOW_WIDTH/2+900, self.WINDOW_HEIGHT/2))
+		self.hat = Hat(pygame.math.Vector2(self.WINDOW_WIDTH/2+900, self.WINDOW_HEIGHT/2+100))
 
 		self.load_animation()
 		self.load_background()
