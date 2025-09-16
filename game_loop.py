@@ -17,6 +17,23 @@ def player_input(events, player):
 			if event.key == pygame.K_d:
 				player.dir *= 0
 
+def tile_bg(self):
+	x_pos = -self.player.pos.x * 0.2
+	rect = self.bg['image'].get_rect()
+	self.screen.blit(self.bg['image'],
+		(x_pos + (self.bg['x_pos']-1) * rect.width, -self.player.pos.y*0.2)
+	)
+	bg_pos = self.bg['x_pos']
+	
+	self.screen.blit(self.bg['image'],
+		(x_pos + self.bg['x_pos'] * rect.width, -self.player.pos.y*0.2)
+	)
+
+	if abs(x_pos) > (bg_pos * rect.width):
+		self.bg['x_pos'] += 1
+
+	if -x_pos < (bg_pos * rect.width) - rect.width:
+		self.bg['x_pos'] -= 1
 
 def game_loop(self):
 	while True:
@@ -35,9 +52,7 @@ def game_loop(self):
 
 		self.player.update(dt)
 
-		self.screen.blit(self.bg['image'],
-			(-self.player.pos.x*0.5, -self.player.pos.y*0.2)
-		)
+		tile_bg(self)
 
 		self.player.draw(self.screen, dt)
 

@@ -66,6 +66,7 @@ class Game:
 		size = img.get_size()
 		scaled = pygame.transform.scale(img, (size[0]*scale_factor, size[0]*scale_factor))
 		self.bg['image'] = scaled
+		self.bg['x_pos'] = 0
 
 	def smokezilla_avi(self, dt):
 		index = self.idle_anim['frame_index']
