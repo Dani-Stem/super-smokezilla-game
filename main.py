@@ -4,6 +4,7 @@ from menu import start_menu, render_start_menu
 from game_loop import game_loop
 from all_sprites import AllSprites
 from player import Player
+from shirt import Shirt
 
 class Game:
 	def __init__(self):
@@ -38,6 +39,8 @@ class Game:
 			self.start_channel = pygame.mixer.Channel(0)
 
 		self.player = Player(pygame.math.Vector2(self.WINDOW_WIDTH/2, self.WINDOW_HEIGHT/2+200))
+
+		self.shirt = Shirt(pygame.math.Vector2(self.WINDOW_WIDTH/2, self.WINDOW_HEIGHT/2+200))
 
 		self.load_animation()
 		self.load_background()
