@@ -5,6 +5,7 @@ from game_loop import game_loop
 from all_sprites import AllSprites
 from player import Player
 from shirt import Shirt
+from hat import Hat
 
 class Game:
 	def __init__(self):
@@ -41,6 +42,8 @@ class Game:
 		self.player = Player(pygame.math.Vector2(self.WINDOW_WIDTH/2, self.WINDOW_HEIGHT/2+200))
 
 		self.shirt = Shirt(pygame.math.Vector2(self.WINDOW_WIDTH/2+500, self.WINDOW_HEIGHT/2))
+
+		self.hat = Hat(pygame.math.Vector2(self.WINDOW_WIDTH/2+900, self.WINDOW_HEIGHT/2))
 
 		self.load_animation()
 		self.load_background()
