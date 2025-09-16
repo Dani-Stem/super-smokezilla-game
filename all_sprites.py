@@ -6,9 +6,8 @@ class AllSprites(pygame.sprite.Group):
         super().__init__()
         self.WINDOW_WIDTH = 1215
         self.offset = pygame.math.Vector2()
-        self.offset_shirt = pygame.math.Vector2()
 
-    def customize_draw(self, player, shirt, screen, background):
+    def customize_draw(self, player, screen, background):
 
         self.offset.x = player.rect.centerx - self.WINDOW_WIDTH / 2
 
@@ -18,17 +17,7 @@ class AllSprites(pygame.sprite.Group):
         if self.offset.x > self.WINDOW_WIDTH - 300:
             self.offset.x = self.WINDOW_WIDTH - 300
 
-        self.offset_shirt.x = shirt.rect.centerx - self.WINDOW_WIDTH / 2
-
-        if self.offset_shirt.x < 0:
-            self.offset_shirt.x = 0
-
-        if self.offset_shirt.x > self.WINDOW_WIDTH - 300:
-            self.offset_shirt.x = self.WINDOW_WIDTH - 300
-
-
-        screen.blit(background, -self.offset, -self.offset_shirt)
-
+        screen.blit(background, -self.offset)
 
         for sprite in sorted(self.sprites(), key=lambda sprite: sprite.rect.centery):
             offset_pos = sprite.rect.topleft - self.offset

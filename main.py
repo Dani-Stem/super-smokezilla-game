@@ -40,7 +40,7 @@ class Game:
 
 		self.player = Player(pygame.math.Vector2(self.WINDOW_WIDTH/2, self.WINDOW_HEIGHT/2+200))
 
-		self.shirt = Shirt(pygame.math.Vector2(self.WINDOW_WIDTH/2, self.WINDOW_HEIGHT/2+200))
+		self.shirt = Shirt(pygame.math.Vector2(self.WINDOW_WIDTH/2+500, self.WINDOW_HEIGHT/2))
 
 		self.load_animation()
 		self.load_background()
