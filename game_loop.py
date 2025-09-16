@@ -1,6 +1,7 @@
 import pygame, sys
 import time
 import random
+import math
 
 def player_input(events, player):
 	for event in events:
@@ -29,6 +30,15 @@ def tile_bg(self):
     for i in range(num_tiles):
         self.screen.blit(self.bg['image'], (start_x + i * rect.width, y_pos))
 
+def clouds(self, dt):
+	for cloud in self.clouds:
+		cloud['floaty'] += dt * random.random()
+		floaty = math.sin(cloud['floaty']) * 10
+		x = cloud['pos'].x - (self.player.pos.x * cloud['parallax'])
+		y = cloud['pos'].y - (self.player.pos.y * cloud['parallax']) + floaty
+		self.screen.blit(cloud['image'], (x, y))
+		cloud['pos'].x -= cloud['speed'] * dt
+
 def game_loop(self):
 	while True:
 		self.screen.fill(self.WHITE)
@@ -47,6 +57,9 @@ def game_loop(self):
 		self.player.update(dt)
 
 		tile_bg(self)
+
+		if self.show_clouds:
+			clouds(self, dt)
 
 		self.player.draw(self.screen, dt)
 

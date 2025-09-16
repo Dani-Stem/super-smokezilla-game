@@ -1,5 +1,6 @@
 import pygame
 import time
+import random
 from menu import start_menu, render_start_menu
 from game_loop import game_loop
 from all_sprites import AllSprites
@@ -49,6 +50,7 @@ class Game:
 
 		self.load_animation()
 		self.load_background()
+		self.load_clouds()
 
 	def load_animation(self):
 		num_frames = 6
@@ -67,6 +69,30 @@ class Game:
 		scaled = pygame.transform.scale(img, (size[0]*scale_factor, size[0]*scale_factor))
 		self.bg['image'] = scaled
 		self.bg['x_pos'] = 0
+
+	def load_clouds(self):
+		self.show_clouds = True
+		self.clouds = []
+		imgs = []
+		imgs.append(pygame.image.load("images/cloud.png").convert_alpha())
+		#imgs.append(pygame.image.load("images/cloud2.png").convert_alpha())
+		for i in range(50):
+			scale_factor = random.random()*0.8 + 0.2
+			img = random.choice(imgs)
+			size = img.get_size()
+			scaled = pygame.transform.scale(img, (size[0]*scale_factor, size[1]*scale_factor))
+			x = random.randint(-1000,15000)
+			mid = int(self.WINDOW_HEIGHT/2)
+			y = random.randint(mid - mid + 200, mid - 100)
+			pos = pygame.math.Vector2(x, y)
+			self.clouds.append({'image':scaled, 'pos':pos,
+				'floaty':random.randint(0,10000),
+				'speed':random.randint(5,20),
+				'parallax':scale_factor*0.5
+			})
+
+		self.clouds.sort(key=lambda cloud: cloud['parallax'])
+		
 
 	def smokezilla_avi(self, dt):
 		index = self.idle_anim['frame_index']
