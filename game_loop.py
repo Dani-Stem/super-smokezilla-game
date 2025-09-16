@@ -18,22 +18,16 @@ def player_input(events, player):
 				player.dir *= 0
 
 def tile_bg(self):
-	x_pos = -self.player.pos.x * 0.2
-	rect = self.bg['image'].get_rect()
-	self.screen.blit(self.bg['image'],
-		(x_pos + (self.bg['x_pos']-1) * rect.width, -self.player.pos.y*0.2)
-	)
-	bg_pos = self.bg['x_pos']
-	
-	self.screen.blit(self.bg['image'],
-		(x_pos + self.bg['x_pos'] * rect.width, -self.player.pos.y*0.2)
-	)
-
-	if abs(x_pos) > (bg_pos * rect.width):
-		self.bg['x_pos'] += 1
-
-	if -x_pos < (bg_pos * rect.width) - rect.width:
-		self.bg['x_pos'] -= 1
+    parallax = 0.2
+    x_pos = -self.player.pos.x * parallax
+    y_pos = -self.player.pos.y * parallax
+    rect = self.bg['image'].get_rect()
+    
+    num_tiles = (self.WINDOW_WIDTH // rect.width) + 2
+    start_x = (x_pos%rect.width) - rect.width
+    
+    for i in range(num_tiles):
+        self.screen.blit(self.bg['image'], (start_x + i * rect.width, y_pos))
 
 def game_loop(self):
 	while True:
