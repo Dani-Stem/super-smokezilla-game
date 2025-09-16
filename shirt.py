@@ -39,6 +39,12 @@ class Shirt:
 
 		return img
 
+	def collides_with(self, pos, dist=80):
+		if (pos - self.center).magnitude() < dist:
+			return True
+
+		return False
+
 	def draw(self, screen, dt, player):
 		img = self.update_anims(dt)
 		rect = img.get_rect()

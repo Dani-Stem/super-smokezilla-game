@@ -1,6 +1,7 @@
 import pygame, sys
 import time
 import random
+import math
 
 def player_input(events, player):
 	for event in events:
@@ -17,6 +18,32 @@ def player_input(events, player):
 			if event.key == pygame.K_d:
 				player.dir *= 0
 
+def tile_bg(self):
+	parallax = 1
+	if self.parallax_on:
+		parallax = 0.2
+	x_pos = -self.player.pos.x * parallax
+	y_pos = -self.player.pos.y * parallax
+	rect = self.bg['image'].get_rect()
+	
+	num_tiles = (self.WINDOW_WIDTH // rect.width) + 2
+	start_x = (x_pos%rect.width) - rect.width
+	
+	for i in range(num_tiles):
+		self.screen.blit(self.bg['image'], (start_x + i * rect.width, y_pos))
+
+def clouds(self, dt):
+	for cloud in self.clouds:
+		cloud['floaty'] += dt * random.random()
+		floaty = math.sin(cloud['floaty']) * 10
+		parallax = 1
+		if self.parallax_on:
+			parallax = cloud['parallax']
+		x = cloud['pos'].x - (self.player.pos.x * parallax)
+		y = cloud['pos'].y - (self.player.pos.y * parallax) + floaty
+		self.screen.blit(cloud['image'], (x, y))
+		cloud['pos'].x -= cloud['speed'] * dt
+
 def game_loop(self):
 	while True:
 		self.screen.fill(self.WHITE)
@@ -26,6 +53,9 @@ def game_loop(self):
 			if event.type == pygame.QUIT:
 				pygame.quit()
 				sys.exit()
+			if event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_p:
+					self.parallax_on = not self.parallax_on
 			if event.type == pygame.MOUSEBUTTONDOWN:
 				mouse = event.pos
 		player_input(events, self.player)
@@ -34,13 +64,14 @@ def game_loop(self):
 
 		self.player.update(dt)
 
-		self.screen.blit(self.bg['image'],
-			(-self.player.pos.x*0.5, -self.player.pos.y*0.2)
-		)
+		tile_bg(self)
+
+		if self.show_clouds:
+			clouds(self, dt)
 
 		self.player.draw(self.screen, dt)
-		
-		if (self.player.pos - self.shirt.center).magnitude() < 400:
+
+		if self.shirt.collides_with((self.player.pos + self.center)):
 			self.shirt.display = False
 
 		if self.shirt.display:
