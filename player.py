@@ -1,7 +1,7 @@
 import pygame
 from pygame.math import Vector2 as vec
 
-class Player2:
+class Player:
 	def __init__(self, center):
 		self.center = center
 		self.pos = vec(0,0)
