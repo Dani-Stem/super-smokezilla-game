@@ -39,6 +39,9 @@ def game_loop(self):
 		)
 
 		self.player.draw(self.screen, dt)
+		
+		if (self.player.pos - self.shirt.center).magnitude() < 400:
+			self.shirt.display = False
 
 		if self.shirt.display:
 			self.shirt.draw(self.screen, dt, self.player.pos)
