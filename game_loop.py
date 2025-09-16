@@ -40,7 +40,7 @@ def game_loop(self):
 
 		self.player.draw(self.screen, dt)
 
-		self.shirt.draw(self.screen, dt)
+		self.shirt.draw(self.screen, dt, self.player.pos)
 
 		pygame.display.update()
 

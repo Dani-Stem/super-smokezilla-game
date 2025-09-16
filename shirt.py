@@ -38,10 +38,10 @@ class Shirt:
 
 		return img
 
-	def draw(self, screen, dt):
+	def draw(self, screen, dt, player):
 		img = self.update_anims(dt)
 		rect = img.get_rect()
-		rect.center = (self.center.x, self.center.y)
+		rect.center = (self.center.x - player.x, self.center.y - player.y)
 		screen.blit(img, rect)
 
 
