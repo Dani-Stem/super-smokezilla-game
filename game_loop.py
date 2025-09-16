@@ -40,10 +40,6 @@ def game_loop(self):
 
 		self.player.draw(self.screen, dt)
 
-		self.screen.blit(self.bg['image'],
-			(-self.shirt.pos.x*0.5, -self.shirt.pos.y*0.2)
-		)
-
 		self.shirt.draw(self.screen, dt)
 
 		pygame.display.update()
